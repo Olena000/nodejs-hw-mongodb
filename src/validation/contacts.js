@@ -24,10 +24,9 @@ export const createContactSchema = Joi.object({
       'string.max': 'Phone number must be no more than 20 characters long.',
       'any.required': 'Phone number is a required field.',
     }),
-  email: Joi.string().email().max(254).required().messages({
+  email: Joi.string().email().max(254).messages({
     'string.email': 'Please enter a valid email address.',
     'string.max': 'Email must be no more than 254 characters long.',
-    'any.required': 'Email is a required field.',
   }),
   isFavourite: Joi.boolean().default(false).messages({
     'boolean.base': 'The "isFavourite" field must be a boolean value.',
@@ -52,7 +51,6 @@ export const updateContactSchema = Joi.object({
       'string.pattern.base': 'Name must contain only letters and spaces.',
       'string.min': 'Name must be at least 3 characters long.',
       'string.max': 'Name must be no more than 20 characters long.',
-      'any.required': 'Name is a required field.',
     }),
   phoneNumber: Joi.string()
     .pattern(/^[0-9+\-() ]+$/)
@@ -63,12 +61,10 @@ export const updateContactSchema = Joi.object({
         'Phone number can contain only digits, +, -, (), and spaces.',
       'string.min': 'Phone number must be at least 7 characters long.',
       'string.max': 'Phone number must be no more than 20 characters long.',
-      'any.required': 'Phone number is a required field.',
     }),
   email: Joi.string().email().max(254).messages({
     'string.email': 'Please enter a valid email address.',
     'string.max': 'Email must be no more than 254 characters long.',
-    'any.required': 'Email is a required field.',
   }),
   isFavourite: Joi.boolean().messages({
     'boolean.base': 'The "isFavourite" field must be a boolean value.',
@@ -76,6 +72,5 @@ export const updateContactSchema = Joi.object({
   contactType: Joi.string().valid('work', 'home', 'personal').messages({
     'any.only':
       'Contact type must be one of the following: work, home, personal.',
-    'any.required': 'Contact type is a required field.',
   }),
 });
