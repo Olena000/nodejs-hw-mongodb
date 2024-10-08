@@ -17,30 +17,36 @@ import { authenticate } from '../middlewares/authenticate.js';
 
 const contactsRouter = Router();
 
-contactsRouter.use(authenticate);
-
-contactsRouter.get('/contacts', ctrlWrapper(getContactsController));
+contactsRouter.get(
+  '/contacts',
+  authenticate,
+  ctrlWrapper(getContactsController),
+);
 
 contactsRouter.get(
   '/contacts/:contactId',
+  authenticate,
   isValidId,
   ctrlWrapper(getContactByIdController),
 );
 
 contactsRouter.post(
   '/register',
+  authenticate,
   validateBody(createContactSchema),
   ctrlWrapper(createContactController),
 );
 
 contactsRouter.delete(
   '/contacts/:contactId',
+  authenticate,
   isValidId,
   ctrlWrapper(deleteContactController),
 );
 
 contactsRouter.patch(
   '/contacts/:contactId',
+  authenticate,
   isValidId,
   validateBody(updateContactSchema),
   ctrlWrapper(patchContactController),
