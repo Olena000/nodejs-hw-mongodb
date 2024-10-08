@@ -1,5 +1,9 @@
 import { THIRTY_DAYS } from '../constants/index.js';
-import { logoutUser, registerUser } from '../services/auth.js';
+import {
+  logoutUser,
+  refreshUsersSession,
+  registerUser,
+} from '../services/auth.js';
 import { loginUser } from '../services/auth.js';
 
 export const registerUserController = async (req, res) => {
@@ -42,4 +46,32 @@ export const logoutUserController = async (req, res) => {
   res.clearCookie('refreshToken');
 
   res.status(204).send();
+};
+
+const setupSession = (res, session) => {
+  res.cookie('refreshToken', session.refreshToken, {
+    httpOnly: true,
+    expires: new Date(Date.now() + THIRTY_DAYS),
+  });
+  res.cookie('sessionId', session._id, {
+    httpOnly: true,
+    expires: new Date(Date.now() + THIRTY_DAYS),
+  });
+};
+
+export const refreshUserSessionController = async (req, res) => {
+  const session = await refreshUsersSession({
+    sessionId: req.cookies.sessionId,
+    refreshToken: req.cookies.refreshToken,
+  });
+
+  setupSession(res, session);
+
+  res.json({
+    status: 200,
+    message: 'Successfully refreshed a session!',
+    data: {
+      accessToken: session.accessToken,
+    },
+  });
 };
