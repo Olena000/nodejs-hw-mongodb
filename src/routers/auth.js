@@ -13,19 +13,19 @@ import { loginUserController } from '../controllers/auth.js';
 const authRouter = Router();
 
 authRouter.post(
-  '/auth/register',
+  '/register',
   validateBody(registerUserSchema),
   ctrlWrapper(registerUserController),
 );
 
 authRouter.post(
-  '/auth/login',
+  '/login',
   validateBody(loginUserSchema),
   ctrlWrapper(loginUserController),
 );
 
-authRouter.post('/auth/logout', ctrlWrapper(logoutUserController));
+authRouter.post('/logout', ctrlWrapper(logoutUserController));
 
-authRouter.post('/auth/refresh', ctrlWrapper(refreshUserSessionController));
+authRouter.post('/refresh', ctrlWrapper(refreshUserSessionController));
 
 export default authRouter;
