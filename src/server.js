@@ -6,6 +6,8 @@ import router from './routers/index.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import cookieParser from 'cookie-parser';
+import path from 'node:path';
+import { UPLOAD_DIR } from './constants/index.js';
 
 const PORT = Number(env('PORT', '3000'));
 
@@ -33,6 +35,8 @@ export default function setupServer() {
   });
 
   app.use(router);
+
+  app.use('/files', express.static(path.join(UPLOAD_DIR, 'images')));
 
   app.use('*', notFoundHandler);
 
