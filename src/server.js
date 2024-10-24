@@ -8,6 +8,7 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import cookieParser from 'cookie-parser';
 import path from 'node:path';
 import { UPLOAD_DIR } from './constants/index.js';
+import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
 const PORT = Number(env('PORT', '3000'));
 
@@ -37,6 +38,8 @@ export default function setupServer() {
   app.use(router);
 
   app.use('/files', express.static(path.join(UPLOAD_DIR, 'images')));
+
+  app.use('/api-docs', swaggerDocs());
 
   app.use('*', notFoundHandler);
 
